@@ -1,0 +1,19 @@
+<h1> Lista de matérias</h1>
+	 <md-button href="#/addSubject">  Criar nova matéria </md-button>
+	  <md-content ng-controller="SubjectListCtrl" style="background : #f7f7f7;height:376px;">
+		<md-list>
+		  <md-item ng-repeat="subject in todos">
+			<md-item-content>
+			  <div class="md-tile-left">
+				  <a href="#/subjectUpdate/{{subject.id}}"> <img ng-src="{{subject.face}}" class="face" alt="{{subject.name}}"style="height:30px; width:30px;" </a>
+			  </div>
+			  <div class="md-tile-content">
+				<a href="#/subjectUpdate/{{subject.id}}"> <span>{{subject.name}}</span></a>
+				<h4>Sistemas, Engenharia, CC</h4>
+				
+			  </div>
+			  <md-button ng-click="showConfirm($event)" > Excluir </md-button>
+			</md-item-content>
+		  </md-item>
+		</md-list>
+	  </md-content>

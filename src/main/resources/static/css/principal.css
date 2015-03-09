@@ -1,0 +1,63 @@
+.whiteframedemoBasicUsage md-whiteframe {
+  background: #fff;
+  margin: 20px;
+  padding: 20px; }
+  
+#main-div {
+	width: 765px;
+	height: 622px;
+	margin: auto;
+	margin-top: 42px;
+	 
+}
+#principal {
+	background-color: #ffffff;
+	width: 765px;
+	height: 622px;
+	margin: auto;
+}
+
+#header-div {
+	font-size: 16px;
+	background-color: #ffffff;
+	color: black;
+	padding-left: 20px;
+}
+
+#left-div {
+	height: 538px;
+	width: 182px;
+	background-color: #ffffff;
+	padding-top: 20px;
+	padding-left: 20px;
+}
+
+#right-div {
+	height: 538px;
+	width: 582px;
+	background-color: #f7f7f7;
+	padding-top: 20px;
+	padding-left: 20px;
+
+}
+
+#left-div .md-button {
+	text-transform : capitalize;
+	text-decoration : none;
+}
+
+#right-div .md-button {
+	text-transform : capitalize;
+	text-decoration : none;
+}
+.inputdemoErrors .inputErrorsApp {
+  min-height: 48px; }
+  
+  .inputdemoIcons .inputIconDemo {
+  min-height: 48px; }
+  
+  .listdemoBasicUsage .face {
+  border-radius: 30px;
+  border: 1px solid #ddd;
+  width: 48px;
+  margin: 16px; }

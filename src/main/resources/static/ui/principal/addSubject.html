@@ -1,0 +1,17 @@
+<h1> Inserir matéria </h1>
+
+    <md-input-container flex>
+		<label>Nome da Matéria</label>
+        <input ng-model="subject.name" placeholder="Nome da Matéria" style=" width: 250px; font-size: 14px;">
+    </md-input-container>
+		
+
+	
+	<div  layout="column" layout-align="center center" style="min-height: 140px; ">
+	  <md-select ng-model="subject.courses">
+		<md-option value="1">C.C</md-option>
+		<md-option value="2" ng-selected="selected">S.I</md-option>
+	  </md-select>
+	  <md-button ng-click="selected=true">Select</md-button>
+	  Fazer uma Lista dos cursos aqi, se a caso digitar errado :] 
+	</div>	
