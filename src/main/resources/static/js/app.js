@@ -5,18 +5,18 @@ angular
 		$scope.menutitle = "Menu.";	
 		$scope.showConfirm = function(ev) {
 		var confirm = $mdDialog.confirm()
-		  .title('Você gostaria de deletar este item?')
-		  .content('')
-		  .ariaLabel('Lucky day')
-		  .ok('Sim')
-		  .cancel('Não')
-		  .targetEvent(ev);
-		$mdDialog.show(confirm).then(function() {
-		  $scope.alert = 'You decided to get rid of your debt.';
-		}, function() {
-		  $scope.alert = 'You decided to keep your debt.';
-		});
-  };
+			  .title('Você gostaria de deletar este item?')
+			  .content('')
+			  .ariaLabel('Lucky day')
+			  .ok('Sim')
+			  .cancel('Não')
+			  .targetEvent(ev);
+			$mdDialog.show(confirm).then(function() {
+			  $scope.alert = 'You decided to get rid of your debt.';
+			}, function() {
+			  $scope.alert = 'You decided to keep your debt.';
+			});
+		};
 		
 		
 		
@@ -40,19 +40,40 @@ angular
 			templateUrl: 'ui/principal/subjectList.html',
 			controller: 'AppCtrl'
 		})
+		
+		//ADD USER
+		
 		.when('/addCourse',
 		{
 				templateUrl: 'ui/principal/addCourse.html',
-				controller: 'AppCtrl'
+				controller: 'CourseListCtrl'
 		})
 		.when('/addUser',{
 			templateUrl: 'ui/principal/addUser.html',
-			controller: 'AppCtrl'
+			controller: 'UserListCtrl'
 		})
 		.when ('/addSubject',{
-			templateUrl: 'ui/principal/addSubject.html',
-			controller: 'AppCtrl'
-		});
+			templateUrl: 'ui/principal/formSubject.html',
+			controller: 'SubjectListCtrl'
+		})
+		
+		// UPDATE 
+		
+		.when('/updateSubject/:id',
+		{
+			templateUrl: 'ui/principal/formSubject.html',
+			controller: 'SubjectListCtrl'
+		})
+		.when('/addUser/:id',
+		{
+			templateUrl: 'ui/principal/addUser.html',
+			controller: 'UserListCtrl'
+		})
+		.when('/addCourse/:id',
+		{
+			templateUrl: 'ui/principal/addCourse.html',
+			controller: 'CourseListCtrl'
+		})
 		
 	})
 	
@@ -69,48 +90,78 @@ angular
 	
 	})
 	
-	.controller('CourseListCtrl', function($scope) {
-		$scope.todos = [
-		  {	
-			id : 1,
-			face : 'img/course/curso.jpg',
-			name: 'Sistemas de Informação',
-			periods: '8'
-		  },
-		  {
-			id : 2,
-			face : 'img/course/curso.jpg',
-			name: 'Engenharia de Software',
-			periods: '8'
-		  },
-		  {
-			id : 3,
-			face : 'img/course/curso.jpg',
-			name: 'C.C',
-			periods: '8'
-		  },
-		];
+	.controller('CourseListCtrl', function($scope,$http) {
+		$http.get('/courseList/').success(function(data){
+			$scope.todos = data;
+			for (var i=0; i< $scope.todos.length; i++)
+			{
+				$scope.todos[i].face = 'img/course/curso.jpg';
+			}		
+		})
+		$http.get('/subjectList/').success(function(data)
+		{
+			$scope.subjects = data;
+		})
+		
+	})
+	/*======================================================================================
+	 * 
+	 * CONTROLLER SUBJECT :D
+	 * 
+	 */
+	.controller('SubjectListCtrl', function($scope,$http,$location,$routeParams,$mdDialog) {
+
+		$scope.subject = {};
+		
+		if( $routeParams.id ) {
+			$http.post('/findById', $routeParams.id).success(function(data){
+				$scope.subject = data;
+			});
+		}
+		
+		$scope.showConfirm = function(ev,subject) {
+			var confirm = $mdDialog.confirm()
+				  .title('Você gostaria de deletar este item?')
+				  .content('')
+				  .ariaLabel('Lucky day')
+				  .ok('Sim')
+				  .cancel('Não')
+				  .targetEvent(ev);
+				$mdDialog.show(confirm).then(function() {
+				  $scope.deleteSubject(subject);
+				}, function() {
+				  $scope.alert = 'You decided to keep your debt.';
+				});
+			};		
+		
+		$scope.list = function(){
+			$http.get('/subjectList/').success(function(data)
+			{
+				$scope.todos = data;
+				for (var i=0; i< $scope.todos.length; i++)
+				{
+					$scope.todos[i].face = 'img/subject/materia.jpg';
+				}
+			})
+			}
+		
+		$scope.salvar = function(subject){
+
+			$http.post('/saveSubject',subject ).success(function(data)
+			{
+				$scope.subject = data;
+				$scope.list();
+			});
+		}
+	
+		$scope.deleteSubject = function(subject) {
+			$http.post('/deleteSubject', subject).success(function(data){
+				$scope.subject = data;
+				$scope.list();
+			});
+		}
+		$scope.list();	
 	})
 	
-	.controller('SubjectListCtrl', function($scope) {
-		$scope.todos = [
-		  {	
-			id : 1,
-			face : 'img/subject/materia.jpg',
-			name: 'Calculo'
-			
-		  },
-		  {
-			id : 2,
-			face : 'img/subject/materia.jpg',
-			name: 'ELP'
-		  },
-		  {
-			id : 3,
-			face : 'img/subject/materia.jpg',
-			name: 'Estrutura de dados'
 	
-		  },
-		];
-	});
 	

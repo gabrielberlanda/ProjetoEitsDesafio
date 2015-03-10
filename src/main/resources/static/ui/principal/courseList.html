@@ -1,14 +1,14 @@
 <h1> Lista de cursos</h1>
 	 <md-button href="#/addCourse">  Criar novo curso </md-button>
-	  <md-content ng-controller="CourseListCtrl" style="background : #f7f7f7;height:376px;">
+	  <md-content ng-controller="CourseListCtrl" style="background : #fffafa;height:376px;">
 		<md-list>
 		  <md-item ng-repeat="course in todos">
 			<md-item-content>
 			  <div class="md-tile-left">
-				  <a href="#/courseUpdate/{{course.id}}"> <img ng-src="{{course.face}}" class="face" alt="{{course.name}}"style="height:30px; width:30px;" </a>
+				  <a href="#/addCourse/{{course.id}}"> <img ng-src="{{course.face}}" class="face" alt="{{course.name}}"style="height:30px; width:30px;" </a>
 			  </div>
 			  <div class="md-tile-content">
-				<a href="#/courseUpdate/{{course.id}}"> <span>{{course.name}}</span></a>
+				<a href="#/addCourse/{{course.id}}"> <span>{{course.name}}</span></a>
 				<h3>Numero de periodos: {{course.periods}}</h3>
 				<h4>ELP, estrutura de dados, calculo I.</h4>
 			  </div>

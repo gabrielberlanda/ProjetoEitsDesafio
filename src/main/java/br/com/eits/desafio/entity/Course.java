@@ -1,50 +1,59 @@
 package br.com.eits.desafio.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
+import javax.persistence.OneToMany;
 
 @Entity
 public class Course {
-	
+
 	@Id
 	@GeneratedValue
-	
 	private int id;
-	@Column( length=35, nullable = false )
+	@Column(length = 35, nullable = false)
 	private String name;
-	@Column (length=3 , nullable = false )
+	@Column(length = 3, nullable = false)
 	private int periods;
-	//public Subject m_Subject;
+	@OneToMany
+	public List<Subject> subjects;
 
-	public Course(){
+	public List<Subject> getSubjects() {
+		return subjects;
+	}
+
+	public void setSubjects(List<Subject> subjects) {
+		this.subjects = subjects;
+	}
+
+	public Course() {
 
 	}
 
-
-	public int getId(){
+	public int getId() {
 		return id;
 	}
-	
-	public String getName(){
+
+	public String getName() {
 		return name;
 	}
 
-	public int getPeriods(){
+	public int getPeriods() {
 		return periods;
 	}
 
-	public void setId(int id){
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public void setName(String name){
+	public void setName(String name) {
 		this.name = name;
 	}
 
-	public void setPeriods(int periods){
+	public void setPeriods(int periods) {
 		this.periods = periods;
 
 	}

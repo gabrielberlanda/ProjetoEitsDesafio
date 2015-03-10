@@ -22,6 +22,11 @@ public class SubjectService {
 		return subjectRepository.save(create);
 	}
 	
+	public Subject save (Subject subject)
+	{
+		return subjectRepository.save(subject);
+		
+	}
 	@Transactional 
 	public Subject findById ( int id)
 	{

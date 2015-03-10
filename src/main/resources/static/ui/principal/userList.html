@@ -1,14 +1,14 @@
 <h1> Lista de usuarios</h1>
 	 <md-button href="#/addUser">  Criar novo usuario </md-button>
-	  <md-content ng-controller="UserListCtrl" style="background : #f7f7f7;height:376px;">
+	  <md-content ng-controller="UserListCtrl" style="background : #fffafa;height:376px;">
 		<md-list>
 		  <md-item ng-repeat="user in todos">
 			<md-item-content>
 			  <div class="md-tile-left">
-				  <a href="#/userUpdate/{{user.id}}"> <img ng-src="{{user.face}}" class="face" alt="{{user.name}}"style="height:30px; width:30px;" </a>
+				  <a href="#/addUser/{{user.id}}" ng-click="load"> <img ng-src="{{user.face}}" class="face" alt="{{user.name}}"style="height:30px; width:30px;" </a>
 			  </div>
 			  <div class="md-tile-content">
-				<a href="#/userUpdate/{{user.id}}"> <span>{{user.name}}</span></a>
+				<a href="#/addUser/{{user.id}}"> <span>{{user.name}}</span></a>
 				<h3>{{user.age}}, {{user.gender}}</h3>
 				<h4>{{user.email}}</h4>
 				<h4>{{user.userType}}</h4>
