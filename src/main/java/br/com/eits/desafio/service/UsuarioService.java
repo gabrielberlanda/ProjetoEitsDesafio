@@ -20,9 +20,13 @@ public class UsuarioService {
 	public Usuario create (Usuario usuario)
 	{
 		Usuario createdUsuario = usuario;
-		return usuarioRepository.save(createdUsuario);
-		
+		return usuarioRepository.save(createdUsuario);	
 	}
+	public Usuario save ( Usuario usuario)
+	{
+		return usuarioRepository.save(usuario);
+	}
+	
 	@Transactional
 	public Usuario findById (int id)
 	{

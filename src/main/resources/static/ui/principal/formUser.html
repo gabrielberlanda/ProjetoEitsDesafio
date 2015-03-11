@@ -1,0 +1,46 @@
+<h1> Inserir usuário </h1>
+
+	  <md-input-container flex>
+        <label>Nome do usuário</label>
+        <input required name="userName" ng-model="user.name" style="width: 250px; font-size: 14px;">
+        <div ng-messages="projectForm.userName.$error">
+          <div ng-message="required">Campo obrigatório.</div>
+        </div>
+      </md-input-container>
+
+	  <md-input-container flex>
+        <label>Idade</label>
+        <input required name="userAge" ng-model="user.age" style="width: 50px; font-size: 14px;">
+        <div ng-messages="projectForm.userage.$error">
+          <div ng-message="required">Campo obrigatório.</div>
+        </div>
+      </md-input-container>    
+	
+    
+	  <md-input-container flex>
+        <label>E-mail</label>
+        <input required type="email" name="userEmail" ng-model="user.email" style="width: 250px; font-size: 14px;">
+        <div ng-messages="projectForm.userEmail.$error">
+          <div ng-message="required">Campo obrigatório.</div>
+        </div>
+      </md-input-container>    
+	
+	<div layout="row">
+		<div  layout="column" layout-align="center center" style="min-height: 140px; ">
+		  Sexo.
+		  <md-select required ng-model="user.gender">
+			<md-option value="Feminino">Femenino</md-option>
+			<md-option value="Masculino" ng-selected="selected">Masculino</md-option>
+		  </md-select>
+		</div>	
+		
+		<div  layout="column" layout-align="center center" style="min-height: 140px; padding-left:100px">
+		 Tipo de usuário
+		 <md-select required ng-model="user.userType">
+			<md-option value="Administrador">Administrador</md-option>
+			<md-option value="Usuario" ng-selected="selected">Usuário</md-option>
+		  </md-select>
+		</div>	
+	</div>
+	
+	<md-button ng-click="salvar(user)"> SAVE </md-button>

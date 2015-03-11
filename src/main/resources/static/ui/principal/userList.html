@@ -1,19 +1,19 @@
-<h1> Lista de usuarios</h1>
-	 <md-button href="#/addUser">  Criar novo usuario </md-button>
+<h1> Lista de usuários</h1>
+	 <md-button href="#/addUser">  Criar novo usuário </md-button>
 	  <md-content ng-controller="UserListCtrl" style="background : #fffafa;height:376px;">
 		<md-list>
 		  <md-item ng-repeat="user in todos">
 			<md-item-content>
 			  <div class="md-tile-left">
-				  <a href="#/addUser/{{user.id}}" ng-click="load"> <img ng-src="{{user.face}}" class="face" alt="{{user.name}}"style="height:30px; width:30px;" </a>
+				  <a href="#/updateUser/{{user.id}}" > <img ng-src="{{user.face}}" class="face" alt="{{user.name}}"style="height:30px; width:30px;" </a>
 			  </div>
 			  <div class="md-tile-content">
-				<a href="#/addUser/{{user.id}}"> <span>{{user.name}}</span></a>
+				<a href="#/updateUser/{{user.id}}"> <span>{{user.name}}</span></a>
 				<h3>{{user.age}}, {{user.gender}}</h3>
 				<h4>{{user.email}}</h4>
 				<h4>{{user.userType}}</h4>
 			  </div>
-			  <md-button ng-click="showConfirm($event)" > Excluir </md-button>
+			  <md-button ng-click="showConfirm($event,user)" > Excluir </md-button>
 			</md-item-content>
 		  </md-item>
 		</md-list>

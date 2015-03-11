@@ -3,20 +3,6 @@ angular
 	.controller('AppCtrl', function($scope,$mdDialog) {
 
 		$scope.menutitle = "Menu.";	
-		$scope.showConfirm = function(ev) {
-		var confirm = $mdDialog.confirm()
-			  .title('Você gostaria de deletar este item?')
-			  .content('')
-			  .ariaLabel('Lucky day')
-			  .ok('Sim')
-			  .cancel('Não')
-			  .targetEvent(ev);
-			$mdDialog.show(confirm).then(function() {
-			  $scope.alert = 'You decided to get rid of your debt.';
-			}, function() {
-			  $scope.alert = 'You decided to keep your debt.';
-			});
-		};
 		
 		
 		
@@ -28,28 +14,28 @@ angular
 		.when('/usuarios', 
 			{
             templateUrl: 'ui/principal/userList.html',
-            controller: 'AppCtrl'
+            controller: 'UserListCtrl'
             })
 		.when('/cursos',
 		{
 			templateUrl: 'ui/principal/courseList.html',
-			controller: 'AppCtrl'
+			controller: 'CourseListCtrl'
 		})
 		.when('/materias',
 		{
 			templateUrl: 'ui/principal/subjectList.html',
-			controller: 'AppCtrl'
+			controller: 'SubjectListCtrl'
 		})
 		
 		//ADD USER
 		
 		.when('/addCourse',
 		{
-				templateUrl: 'ui/principal/addCourse.html',
+				templateUrl: 'ui/principal/formCourse.html',
 				controller: 'CourseListCtrl'
 		})
 		.when('/addUser',{
-			templateUrl: 'ui/principal/addUser.html',
+			templateUrl: 'ui/principal/formUser.html',
 			controller: 'UserListCtrl'
 		})
 		.when ('/addSubject',{
@@ -64,50 +50,86 @@ angular
 			templateUrl: 'ui/principal/formSubject.html',
 			controller: 'SubjectListCtrl'
 		})
-		.when('/addUser/:id',
+		.when('/updateUser/:id',
 		{
-			templateUrl: 'ui/principal/addUser.html',
+			templateUrl: 'ui/principal/formUser.html',
 			controller: 'UserListCtrl'
 		})
-		.when('/addCourse/:id',
+		.when('/updateCourse/:id',
 		{
-			templateUrl: 'ui/principal/addCourse.html',
+			templateUrl: 'ui/principal/formCourse.html',
 			controller: 'CourseListCtrl'
 		})
 		
 	})
-	
-	//Controller de Lista de usuario.
-	.controller('UserListCtrl', function($scope,$http) {
-		$http.get('/userList/').success(function(data)
-		{
-			$scope.todos = data;
-			for (var i=0; i < $scope.todos.length; i++)
-			{
-				$scope.todos[i].face = 'img/user/perfil.jpg';
-			}
-		})
-	
-	})
-	
-	.controller('CourseListCtrl', function($scope,$http) {
-		$http.get('/courseList/').success(function(data){
-			$scope.todos = data;
-			for (var i=0; i< $scope.todos.length; i++)
-			{
-				$scope.todos[i].face = 'img/course/curso.jpg';
-			}		
-		})
-		$http.get('/subjectList/').success(function(data)
-		{
-			$scope.subjects = data;
-		})
-		
-	})
+
 	/*======================================================================================
 	 * 
-	 * CONTROLLER SUBJECT :D
+	 * CONTROLLER USUARIO 
 	 * 
+	 *======================================================================================
+	 */
+	.controller('UserListCtrl', function($scope,$http,$location,$routeParams,$mdDialog) {
+		
+		$scope.user = {};
+		
+		if( $routeParams.id ) {
+			$http.post('/findUserById', $routeParams.id).success(function(data){
+				$scope.user = data;
+			});
+		}
+		
+		$scope.list = function (){
+			$http.get('/userList/').success(function(data)
+			{
+				$scope.todos = data;
+				for (var i=0; i < $scope.todos.length; i++)
+				{
+					$scope.todos[i].face = 'img/user/perfil.jpg';
+				}
+			})
+		};
+		
+		$scope.showConfirm = function(ev,user) {
+			var confirm = $mdDialog.confirm()
+				  .title('Você gostaria de deletar este item?')
+				  .content('')
+				  .ariaLabel('Lucky day')
+				  .ok('Sim')
+				  .cancel('Não')
+				  .targetEvent(ev);
+			$mdDialog.show(confirm).then(function() {
+			    $scope.deleteUser(user);
+			 }, function() {
+			    $scope.alert = 'You decided to keep your debt.';				
+			 });
+		};	
+		
+		$scope.salvar = function(user){
+
+			$http.post('/saveUser',user ).success(function(data)
+			{
+				$scope.user = data;
+				$scope.list();
+			});
+		}
+		$scope.deleteUser = function(user) {
+			$http.post('/deleteUser', user).success(function(data){
+				$scope.user = data;
+				$scope.list();
+			});
+		}
+		
+		$scope.list();	
+			
+			
+	})
+	
+	/*======================================================================================
+	 * 
+	 * CONTROLLER SUBJECT 
+	 * 
+	 *======================================================================================
 	 */
 	.controller('SubjectListCtrl', function($scope,$http,$location,$routeParams,$mdDialog) {
 
@@ -143,7 +165,7 @@ angular
 					$scope.todos[i].face = 'img/subject/materia.jpg';
 				}
 			})
-			}
+		}
 		
 		$scope.salvar = function(subject){
 
@@ -163,5 +185,85 @@ angular
 		$scope.list();	
 	})
 	
+	/*======================================================================================
+	 * 
+	 * CONTROLLER COURSE  
+	 * 
+	 *======================================================================================
+	 */
+	.controller('CourseListCtrl', function($scope,$http,$location,$routeParams,$mdDialog) {
+		$scope.course = {
+						subjects : [] 
+						};
+		
+		$scope.list = function() {
+			$http.get('/courseList/').success(function(data){
+				$scope.todos = data;
+				for (var i=0; i< $scope.todos.length; i++)
+				{
+					$scope.todos[i].face = 'img/course/curso.jpg';
+				}		
+			})
+		}
+		
+		if( $routeParams.id ) {
+			$http.post('/findCourseById', $routeParams.id).success(function(data){
+				$scope.course = data;
+			});
+		}
+		
+		$scope.showConfirm = function(ev,course) {
+			var confirm = $mdDialog.confirm()
+				  .title('Você gostaria de deletar este item?')
+				  .content('')
+				  .ariaLabel('Lucky day')
+				  .ok('Sim')
+				  .cancel('Não')
+				  .targetEvent(ev);
+				$mdDialog.show(confirm).then(function() {
+				  $scope.deleteCourse(course);
+				}, function() {
+				  $scope.alert = 'You decided to keep your debt.';
+				});
+			};	
+		
+		$http.get('/subjectList/').success(function(data)
+		{
+			$scope.subjects = data;
+		})
+		
+		$scope.salvar = function(course){
+			$http.post('/saveCourse',course).success(function(data)
+			{
+				$scope.course = data;
+				$scope.list();
+			});
+		}
+		$scope.deleteCourse = function(course) {
+			course.subjects = [];
+			$http.post('/deleteCourse', course).success(function(data){
+				$scope.course = data;
+				$scope.list();
+			});
+		}
+		$scope.addSubjects = function (course, subject) {
+			var found = false;
+			for ( var k =0 ; k <  course.subjects.length; k++)
+			{
+				if (course.subjects[k] == subject){
+					found = true;
+				}
+			}
+			if (!found)
+			{
+				course.subjects.push(subject);
+			}
+		}	
+		$scope.removeSubjects = function (course, subject)
+		{
+			course.subjects.splice(course.subjects.indexOf(subject),1);
+		}
+		$scope.list();
+	})	
 	
 	

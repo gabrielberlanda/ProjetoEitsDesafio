@@ -38,12 +38,43 @@ public class HomeController {
 		return new ModelAndView("ui/principal/menu");
 	}
 	
-	
+	/*===================================================================================
+	 * 
+	 * Controller User
+	 * 
+	 * 
+	 *====================================================================================
+	 */
 	@RequestMapping("/userList")
 	public List<Usuario> userList() {
 		List<Usuario> userList = usuarioService.findAll();
 		return userList;
 	}
+	@RequestMapping (value="/saveUser")
+	public Usuario saveUser(@RequestBody Usuario usuario) 
+	{
+		return usuarioService.save(usuario);
+	}
+	
+	@RequestMapping (value="/findUserById")
+	public Usuario findUsuer (@RequestBody int id)
+	{
+		return usuarioService.findById(id);
+	}
+	
+	@RequestMapping (value="/deleteUser")
+	public Usuario deleteUser(@RequestBody Usuario usuario)
+	{
+		return usuarioService.delete( usuario.getId() );
+	}
+	
+	
+	/*============================================================================
+	 * 
+	 * Controller Course
+	 * 
+	 * ===========================================================================
+	 */
 
 	@RequestMapping("/courseList")
 	public List<Course> courseList() 
@@ -51,7 +82,30 @@ public class HomeController {
 		List<Course> courseList = courseService.findAll();
 		return courseList;
 	}
+	@RequestMapping (value="/saveCourse")
+	public Course saveCourse(@RequestBody Course course) 
+	{
+		return courseService.save(course);
+	}
 	
+	@RequestMapping (value="/findCourseById")
+	public Course findCourse (@RequestBody int id)
+	{
+		return courseService.findById(id);
+	}
+	
+	@RequestMapping (value="/deleteCourse")
+	public Course deleteCourse(@RequestBody Course course)
+	{
+		return courseService.delete( course.getId() );
+	}
+	
+	/*============================================================================
+	 * 
+	 * Controller Subject
+	 * 
+	 * ===========================================================================
+	 */
 	@RequestMapping ("/subjectList")
 	public List<Subject> subjectList()
 	{

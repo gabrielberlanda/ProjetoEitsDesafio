@@ -21,10 +21,15 @@ public class CourseService {
 	{
 		Course createdCourse = course;
 		return courseRepository.save( createdCourse );
-		
 	}
 	@Transactional
-	public Course findCourseById ( int id )
+	public Course save ( Course course)
+	{
+		return courseRepository.save(course);
+	}
+
+	@Transactional
+	public Course findById ( int id )
 	{
 		return courseRepository.findOne( id );
 	}

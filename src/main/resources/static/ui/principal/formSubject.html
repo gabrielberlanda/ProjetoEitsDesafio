@@ -1,8 +1,12 @@
 <h1> Inserir matéria </h1>
 
-    <md-input-container flex>
-		<label>Nome da Matéria</label>
-        <input ng-model="subject.name" placeholder="Nome da Matéria" style=" width: 250px; font-size: 14px;">
-    </md-input-container>
-	<md-button  href="#/materias"  ng-click="salvar(subject)"> Salvar </md-button> {{subject}}
+	  <md-input-container flex>
+        <label>Nome da Matéria</label>
+        <input required  name="subjectName" ng-model="subject.name" style="width: 250px; font-size: 14px;">
+        <div ng-messages="projectForm.subjectName.$error">
+          <div ng-message="required">Campo obrigatório.</div>
+        </div>
+      </md-input-container>       
+    
+	<md-button  href="#/materias"  ng-click="salvar(subject)"> Salvar </md-button> 
 	</div>	
