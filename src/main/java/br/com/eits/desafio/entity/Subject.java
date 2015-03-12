@@ -10,7 +10,9 @@ public class Subject {
 	@Id
 	@GeneratedValue
 	private int id;
-	@Column( length=35, nullable = false )
+	
+	@Column( length=35, nullable = false, unique=true )
+	
 	private String name;
 
 	public Subject(){

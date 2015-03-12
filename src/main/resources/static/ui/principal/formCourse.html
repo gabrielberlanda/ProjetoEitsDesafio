@@ -1,36 +1,42 @@
 <h1> Inserir curso </h1>
+ <form name="formCourse" id="formCourse" novalidate>
 	<div layout="row" layout-align="space-around center">
 
 	  <md-input-container flex>
         <label>Nome do curso</label>
-        <input required name="courseName" ng-model="course.name" style="width: 250px; font-size: 14px;">
-        <div ng-messages="projectForm.clientName.$error">
+        <input required name="courseName" md-maxLength="35" ng-model="course.name" style="width: 250px; font-size: 14px;">
+        <div ng-messages="formCourse.courseName.$error">
           <div ng-message="required">Campo obrigatório.</div>
+          <div ng-message="md-maxLength">O tamanho máximo é de 35 characters</div>
         </div>
       </md-input-container>
 	    
 
 		 <md-input-container flex>
 	        <label>Número de periodos</label>
-	        <input required name="coursePeriods" ng-model="course.periods" style="width: 50px; font-size: 14px;">
-	        <div ng-messages="projectForm.coursePeriods.$error">
+	        <input required name="coursePeriods"  type="number" min="0" max="20" integer ng-model="course.periods" style="width: 50px; font-size: 14px;">
+	        <div ng-messages="formCourse.coursePeriods.$error">
 	          <div ng-message="required">Campo obrigatório.</div>
+	        	<div ng-message="formCourse.coursePeriods.$error.integer">Campo é um INTEGER </div>
+	        	 <div ng-message="formUser.coursePeriods.$error.min || formUser.coursePeriods.$error.max">qtd Max = 20</div>
 	        </div>
 	      </md-input-container>
 	    
-	</div>
+	</div >
 	<div  layout="column" layout-align="center center" style="min-height: 140px; ">
 	  <md-select ng-model="subject">
 		  <md-option ng-repeat="s in subjects" ng-click="addSubjects(course,s)" value="{{s.id}}"> {{s.name}} </md-option>
 	  </md-select>
 	  <!--       LISTA DE MATERIAS       -->
 		<div style="height: 200px; width: 500px;">
-	      <md-item ng-repeat="item in course.subjects track by $index">
+	      <md-item required ng-repeat="item in course.subjects track by $index">
 	          <div>
 	          <span> {{item.name}} </span> <md-button ng-click="removeSubjects(course, item)" style="color : red;">X</md-button>
 	          </div>
 	      </md-item>
 	    </div>
 	  
-	</div>	
-	<md-button ng-click="salvar(course)"> Salvar </md-button>
+	</div>
+</form>	
+	
+	<md-button  ng-click="salvar(course)"> Salvar </md-button>

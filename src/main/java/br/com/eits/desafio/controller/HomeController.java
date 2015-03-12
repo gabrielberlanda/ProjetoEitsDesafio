@@ -1,5 +1,4 @@
 package br.com.eits.desafio.controller;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +25,13 @@ public class HomeController {
 	@Autowired
 	private SubjectService subjectService;
 	
-	@RequestMapping("/")
+	@RequestMapping("/login")
 	public ModelAndView home() 
 	{
 		return new ModelAndView("ui/index");
 	}
 	
-	@RequestMapping("/app")
+	@RequestMapping("/")
 	public ModelAndView menu()
 	{
 		return new ModelAndView("ui/principal/menu");

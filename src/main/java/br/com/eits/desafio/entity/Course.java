@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -14,11 +15,11 @@ public class Course {
 	@Id
 	@GeneratedValue
 	private int id;
-	@Column(length = 35, nullable = false)
+	@Column(length = 35, nullable = false, unique = true)
 	private String name;
 	@Column(length = 3, nullable = false)
 	private int periods;
-	@OneToMany
+	@ManyToMany
 	public List<Subject> subjects;
 
 	public List<Subject> getSubjects() {

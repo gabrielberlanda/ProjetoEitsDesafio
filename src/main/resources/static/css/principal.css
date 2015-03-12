@@ -50,8 +50,6 @@
 	text-transform : capitalize;
 	text-decoration : none;
 }
-.inputdemoErrors .inputErrorsApp {
-  min-height: 48px; }
   
   .inputdemoIcons .inputIconDemo {
   min-height: 48px; }
@@ -61,4 +59,7 @@
   border: 1px solid #ddd;
   width: 48px;
   margin: 16px; }
+  
+  .inputdemoErrors .inputErrorsApp {
+  min-height: 48px; }
   

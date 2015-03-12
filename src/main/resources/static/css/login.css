@@ -1,4 +1,4 @@
-/*
+
 #mainDiv {
 
 	background-color: white;
@@ -14,7 +14,7 @@
 	}
 	
 body {
-	background:url('img.jpg');
+	background:url('/img/login/img.jpg');
 	background-size:100% 100%;
 
 }
@@ -50,8 +50,8 @@ md-content{
 	margin-left: 40px;
 	
 }
-*/
 
+/*
 #mainDiv {
 
 	background-color: white;
@@ -103,3 +103,4 @@ md-content{
 	margin-left: 40px;
 	
 }
+*/

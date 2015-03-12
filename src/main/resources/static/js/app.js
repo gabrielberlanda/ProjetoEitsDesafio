@@ -106,17 +106,24 @@ angular
 		};	
 		
 		$scope.salvar = function(user){
-
-			$http.post('/saveUser',user ).success(function(data)
+			var form = angular.element('#formUser').scope()['formUser'];
+			if (form.$invalid){
+				console.log("Formulario inválido")
+				return;
+			}
+			 $http.post('/saveUser',user ).success(function(data)
 			{
 				$scope.user = data;
 				$scope.list();
+				$location.path("/usuarios")
+			
 			});
 		}
 		$scope.deleteUser = function(user) {
 			$http.post('/deleteUser', user).success(function(data){
 				$scope.user = data;
 				$scope.list();
+				
 			});
 		}
 		
@@ -151,11 +158,20 @@ angular
 				  .targetEvent(ev);
 				$mdDialog.show(confirm).then(function() {
 				  $scope.deleteSubject(subject);
+				  $scope.list();
 				}, function() {
 				  $scope.alert = 'You decided to keep your debt.';
 				});
 			};		
-		
+		$scope.showAlert = function() {
+			    $mdDialog.show(
+			      $mdDialog.alert()
+			      .title('ERRO!')
+			      .content('Esta matéria esta associada com um curso.')
+			      .ariaLabel('Password notification')
+			      .ok('fechar!')
+		  );			
+		 }
 		$scope.list = function(){
 			$http.get('/subjectList/').success(function(data)
 			{
@@ -179,9 +195,10 @@ angular
 		$scope.deleteSubject = function(subject) {
 			$http.post('/deleteSubject', subject).success(function(data){
 				$scope.subject = data;
-				$scope.list();
+			}).error(function(data) {
+				$scope.showAlert();
 			});
-		}
+		};
 		$scope.list();	
 	})
 	
@@ -222,6 +239,7 @@ angular
 				  .targetEvent(ev);
 				$mdDialog.show(confirm).then(function() {
 				  $scope.deleteCourse(course);
+				  $scope.list();
 				}, function() {
 				  $scope.alert = 'You decided to keep your debt.';
 				});
@@ -233,10 +251,17 @@ angular
 		})
 		
 		$scope.salvar = function(course){
-			$http.post('/saveCourse',course).success(function(data)
+			var form = angular.element('#formCourse').scope()['formCourse'];
+			if (form.$invalid){
+				console.log("Formulario inválido")
+				return;
+			}
+			 $http.post('/saveCourse',course ).success(function(data)
 			{
 				$scope.course = data;
 				$scope.list();
+				$location.path("/cursos")
+			
 			});
 		}
 		$scope.deleteCourse = function(course) {
@@ -245,7 +270,9 @@ angular
 				$scope.course = data;
 				$scope.list();
 			});
+			$scope.list();
 		}
+		$scope.list();
 		$scope.addSubjects = function (course, subject) {
 			var found = false;
 			for ( var k =0 ; k <  course.subjects.length; k++)
