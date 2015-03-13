@@ -28,16 +28,14 @@ public class UsuarioService {
 	}
 	public Usuario save ( Usuario usuario)
 	{
-		
-		if( usuario.getId() == 0 ){
+		Usuario savedUsuario = usuarioRepository.save(usuario);
 			try {
 				sendEmail(usuario);
 			} catch (EmailException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		};
-		return 	usuarioRepository.save(usuario);
+		return 	savedUsuario;
 	}
 	
 	@Transactional
