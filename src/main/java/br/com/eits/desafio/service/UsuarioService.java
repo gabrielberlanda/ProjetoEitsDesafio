@@ -9,12 +9,14 @@ import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
+import org.directwebremoting.annotations.RemoteProxy;
 import org.springframework.stereotype.Service;
 
 import br.com.eits.desafio.entity.Usuario;
 import br.com.eits.desafio.repository.UsuarioRepository;
 
 @Service
+@RemoteProxy(name="usuarioService")
 public class UsuarioService {
 
 	@Resource

@@ -5,12 +5,14 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
+import org.directwebremoting.annotations.RemoteProxy;
 import org.springframework.stereotype.Service;
 
 import br.com.eits.desafio.entity.Subject;
 import br.com.eits.desafio.repository.SubjectRepository;
 
 @Service
+@RemoteProxy(name="subjectService")
 public class SubjectService {
 	@Resource
 	private SubjectRepository subjectRepository;
