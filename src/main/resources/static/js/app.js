@@ -109,12 +109,16 @@ angular
 				  .targetEvent(ev);
 			$mdDialog.show(confirm).then(function() {
 			    $scope.deleteUser(user);
-				$scope.list();
+				$scope.reloadPage();
 			 }, function() {
 			    $scope.alert = 'You decided to keep your debt.';				
 			 });
 			 $scope.list();
 		};	
+		$scope.reloadPage = function(){
+			window.location.reload();
+		};
+		
 		$scope.showDuplicateAlert = function() {
 		    $mdDialog.show(
 		      $mdDialog.alert()
@@ -183,12 +187,17 @@ angular
 				  .targetEvent(ev);
 				$mdDialog.show(confirm).then(function() {
 				  $scope.deleteSubject(subject);
-					$scope.list();
+					$scope.reloadPage();
 				}, function() {
 				  $scope.alert = 'You decided to keep your debt.';
 				});
 				 $scope.list();
-			};		
+			};	
+			
+			$scope.reloadPage = function(){
+				window.location.reload();
+			};
+			
 		$scope.showAlert = function() {
 			    $mdDialog.show(
 			      $mdDialog.alert()
@@ -300,11 +309,15 @@ angular
 				  .targetEvent(ev);
 				$mdDialog.show(confirm).then(function() {
 				  $scope.deleteCourse(course);
-					$scope.list();
+					$scope.reloadPage();
 				}, function() {
 				  $scope.alert = 'You decided to keep your debt.';
 				});
 			};	
+			
+			$scope.reloadPage = function(){
+				window.location.reload();
+			};
 			
 			$scope.showFailAlert = function() {
 			    $mdDialog.show(
