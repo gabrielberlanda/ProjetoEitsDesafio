@@ -28,13 +28,16 @@ public class UsuarioService {
 	}
 	public Usuario save ( Usuario usuario)
 	{
-		try {
-			sendEmail(usuario);
-		} catch (EmailException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return usuarioRepository.save(usuario);
+		
+		if( usuario.getId() == 0 ){
+			try {
+				sendEmail(usuario);
+			} catch (EmailException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		};
+		return 	usuarioRepository.save(usuario);
 	}
 	
 	@Transactional
@@ -82,7 +85,7 @@ public class UsuarioService {
 			email.setDebug(true);
 			
 			email.setSubject("Criação de cadastro");
-			email.setMsg("Seu cadastro foi criado com sucesso, seu login é: "+usuario.getName()+" e sua senha é: "+usuario.getPassword()+" .");
+			email.setMsg("Parabéns \n Seu cadastro foi criado com sucesso!!\n Seu login é: "+usuario.getEmail()+"\n Seu nome de usuário é: "+usuario.getName()+" \n Sua senha é: "+usuario.getPassword()+" .");
 			email.addTo(usuario.getEmail());
 			email.send();
 		} catch (EmailException e){

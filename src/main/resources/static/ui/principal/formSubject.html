@@ -1,13 +1,15 @@
 <h1> Inserir matéria </h1>
-
-	  <md-input-container flex>
-        <label>Nome da Matéria</label>
-        <input required  name="subjectName" md-maxLength="35" ng-model="subject.name" style="width: 250px; font-size: 14px;">
-        <div ng-messages="projectForm.subjectName.$error">
-          <div ng-message="required">Campo obrigatório.</div>
-          <div ng-message="md-maxLength">O tamanho máximo é de 35 characters</div>
-        </div>
-      </md-input-container>       
+	
+	<form name="formSubject" id="formSubject" novalidate >
+		  <md-input-container flex class="maxL">
+	        <label>Nome da Matéria</label>
+	        <input required  name="subjectName" md-maxLength="35" ng-model="subject.name" style="width: 250px; font-size: 14px;">
+	        <div ng-messages="formSubject.subjectName.$error">
+	          <div ng-message="required">Campo obrigatório.</div>
+	          <div ng-message="md-maxLength">O tamanho máximo é de 35 characters</div>
+	        </div>
+	      </md-input-container>       
     
-	<md-button  href="#/materias"  ng-click="salvar(subject)"> Salvar </md-button> 
+		<md-button  ng-click="salvar(subject)"> Salvar </md-button> 
+	</form>
 	</div>	

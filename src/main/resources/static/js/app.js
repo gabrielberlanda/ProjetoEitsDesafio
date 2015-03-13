@@ -89,6 +89,15 @@ angular
 				}
 			})
 		};
+		$scope.showFailAlert = function() {
+		    $mdDialog.show(
+		      $mdDialog.alert()
+		      .title('Formulário inválido!')
+		      .content( 'Por favor preencha os campos obrigatórios.')
+		      .ariaLabel('Password notification')
+		      .ok('fechar!')
+		    );			
+		}
 		
 		$scope.showConfirm = function(ev,user) {
 			var confirm = $mdDialog.confirm()
@@ -100,15 +109,27 @@ angular
 				  .targetEvent(ev);
 			$mdDialog.show(confirm).then(function() {
 			    $scope.deleteUser(user);
+				$scope.list();
 			 }, function() {
 			    $scope.alert = 'You decided to keep your debt.';				
 			 });
+			 $scope.list();
 		};	
+		$scope.showDuplicateAlert = function() {
+		    $mdDialog.show(
+		      $mdDialog.alert()
+		      .title('Email já cadastrado!')
+		      .content( 'Por favor mude o campo email.')
+		      .ariaLabel('Password notification')
+		      .ok('fechar!')
+		    );			
+		}
 		
 		$scope.salvar = function(user){
 			var form = angular.element('#formUser').scope()['formUser'];
 			if (form.$invalid){
 				console.log("Formulario inválido")
+				$scope.showFailAlert();
 				return;
 			}
 			 $http.post('/saveUser',user ).success(function(data)
@@ -117,6 +138,8 @@ angular
 				$scope.list();
 				$location.path("/usuarios")
 			
+			}).error(function(data){
+				$scope.showDuplicateAlert();
 			});
 		}
 		$scope.deleteUser = function(user) {
@@ -145,6 +168,8 @@ angular
 		if( $routeParams.id ) {
 			$http.post('/findById', $routeParams.id).success(function(data){
 				$scope.subject = data;
+			}).error(function(data){
+				console.log("id invalido.")
 			});
 		}
 		
@@ -158,10 +183,11 @@ angular
 				  .targetEvent(ev);
 				$mdDialog.show(confirm).then(function() {
 				  $scope.deleteSubject(subject);
-				  $scope.list();
+					$scope.list();
 				}, function() {
 				  $scope.alert = 'You decided to keep your debt.';
 				});
+				 $scope.list();
 			};		
 		$scope.showAlert = function() {
 			    $mdDialog.show(
@@ -172,9 +198,34 @@ angular
 			      .ok('fechar!')
 		  );			
 		 }
+		
+		$scope.showFailAlert = function() {
+		    $mdDialog.show(
+		      $mdDialog.alert()
+		      .title('Formulário inválido!')
+		      .content( 'Por favor preencha os campos obrigatórios.')
+		      .ariaLabel('Password notification')
+		      .ok('fechar!')
+		    );			
+		}
+		
+		$scope.showDuplicateAlert = function() {
+		    $mdDialog.show(
+		      $mdDialog.alert()
+		      .title('Matéria já cadastrada!')
+		      .content( 'Por favor mude o campo nome.')
+		      .ariaLabel('Password notification')
+		      .ok('fechar!')
+		    );			
+		}
+		
 		$scope.list = function(){
 			$http.get('/subjectList/').success(function(data)
-			{
+			{	
+				if (data == null){
+					console.log("Array de lista vazio")
+					return;
+				}
 				$scope.todos = data;
 				for (var i=0; i< $scope.todos.length; i++)
 				{
@@ -184,12 +235,22 @@ angular
 		}
 		
 		$scope.salvar = function(subject){
+			var form = angular.element('#formSubject').scope()['formSubject'];
+			if (form.$invalid){
+				console.log("Formulario inválido")
+				
+				$scope.showFailAlert();
+				return;
+			}
 
 			$http.post('/saveSubject',subject ).success(function(data)
 			{
 				$scope.subject = data;
-				$scope.list();
+				$location.path("/materias")
+			}).error(function(data){
+				$scope.showDuplicateAlert();
 			});
+			$scope.list();
 		}
 	
 		$scope.deleteSubject = function(subject) {
@@ -239,11 +300,41 @@ angular
 				  .targetEvent(ev);
 				$mdDialog.show(confirm).then(function() {
 				  $scope.deleteCourse(course);
-				  $scope.list();
+					$scope.list();
 				}, function() {
 				  $scope.alert = 'You decided to keep your debt.';
 				});
 			};	
+			
+			$scope.showFailAlert = function() {
+			    $mdDialog.show(
+			      $mdDialog.alert()
+			      .title('Formulário inválido!')
+			      .content( 'Por favor preencha os campos obrigatórios.')
+			      .ariaLabel('Password notification')
+			      .ok('fechar!')
+			    );			
+			}
+			
+			$scope.showFailSubjectsAlert = function() {
+			    $mdDialog.show(
+			      $mdDialog.alert()
+			      .title('Matéria é obrigatório.')
+			      .content( 'Por favor selecione uma matéria.')
+			      .ariaLabel('Password notification')
+			      .ok('fechar!')
+			    );			
+			}
+			
+			$scope.showDuplicateAlert = function() {
+			    $mdDialog.show(
+			      $mdDialog.alert()
+			      .title('Curso já cadastrado!')
+			      .content( 'Por favor mude o campo nome.')
+			      .ariaLabel('Password notification')
+			      .ok('fechar!')
+			    );			
+			}
 		
 		$http.get('/subjectList/').success(function(data)
 		{
@@ -254,6 +345,12 @@ angular
 			var form = angular.element('#formCourse').scope()['formCourse'];
 			if (form.$invalid){
 				console.log("Formulario inválido")
+				$scope.showFailAlert();
+				return;
+			}
+			if ($scope.course.subjects.length === 0) {
+				console.log("Fomulario inválido")
+				$scope.showFailSubjectsAlert();
 				return;
 			}
 			 $http.post('/saveCourse',course ).success(function(data)
@@ -262,6 +359,9 @@ angular
 				$scope.list();
 				$location.path("/cursos")
 			
+			}).error(function(data){
+				$scope.showDuplicateAlert();
+				return;
 			});
 		}
 		$scope.deleteCourse = function(course) {

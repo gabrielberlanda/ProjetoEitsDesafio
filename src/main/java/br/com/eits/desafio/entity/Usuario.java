@@ -16,11 +16,11 @@ public class Usuario {
 	private int age;
 	private String gender;
 
-	@Column(length = 35, nullable = false, unique = true)
+	@Column(length = 35, nullable = false)
 	private String name;
 	@Column(length = 35, nullable = false)
 	private String userType;
-	@Column(length = 50, nullable = false)
+	@Column(length = 50, nullable = false, unique = true)
 	private String email;
 	@Column(length = 20)
 	private String password;

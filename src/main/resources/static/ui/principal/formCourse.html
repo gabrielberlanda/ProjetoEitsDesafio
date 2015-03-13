@@ -27,15 +27,19 @@
 	  <md-select ng-model="subject">
 		  <md-option ng-repeat="s in subjects" ng-click="addSubjects(course,s)" value="{{s.id}}"> {{s.name}} </md-option>
 	  </md-select>
+	  <span style="font-size:14px;"> Materias </span>
 	  <!--       LISTA DE MATERIAS       -->
-		<div style="height: 200px; width: 500px;">
-	      <md-item required ng-repeat="item in course.subjects track by $index">
+		 <md-content style="height: 200px; width: 500px;" >
+   		  <md-list>
+	      <md-item  ng-repeat="item in course.subjects track by $index">
 	          <div>
 	          <span> {{item.name}} </span> <md-button ng-click="removeSubjects(course, item)" style="color : red;">X</md-button>
 	          </div>
 	      </md-item>
-	    </div>
-	  
+	      </md-list>
+	      </md-content>
+
+	    {{course.subject}}
 	</div>
 </form>	
 	

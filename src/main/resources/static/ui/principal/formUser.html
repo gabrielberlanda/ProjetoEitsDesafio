@@ -1,6 +1,6 @@
 <h1> Inserir usuário </h1>
 	<form name="formUser" novalidate id="formUser">
-	 <md-input-container flex>
+	 <md-input-container flex class="maxL" >
         <label>Nome do usuário</label>
         <input required name="userName" md-maxlength="35" ng-model="user.name" style="width: 250px; font-size: 14px;">
         <div ng-messages="formUser.userName.$error">
@@ -13,29 +13,30 @@
  	
 	  <md-input-container flex>
         <label>Senha</label>
-        <input required md-maxlength="20" name="userPassword" ng-model="user.password" style="width: 250px; font-size: 14px;">
+        <input required type="password" md-maxlength="20" name="userPassword" ng-model="user.password" style="width: 250px; font-size: 14px;">
         <div ng-messages="formUser.userPassword.$error">
           <div ng-message="required">Campo obrigatório.</div>
           <div ng-message="md-maxLength">O tamanho máximo é de 20 character.</div>
         </div>
+       
       </md-input-container>     
       <md-input-container flex>
         <label>Idade</label>
         <input required type="number" min="0" max="99" integer name="userAge" ng-model="user.age" style="width: 50px; font-size: 14px;">
         <div ng-messages="formUser.userAge.$error">
           <div ng-message="required">Campo obrigatório.</div>
-          <div ng-message="formUser.userAge.$error.integer">Necessário um numero inteiro</div>
-          <div ng-message="formUser.userAge.$error.min || form.size.$error.max">A idade minima é 0 e a maxima é 99</div>
+          <div ng-show="formUser.userAge.$error.integer">Necessário um numero inteiro</div>
+          <div ng-show="formUser.userAge.$error.min || form.size.$error.max">A idade minima é 0 e a maxima é 99</div>
         </div>
       </md-input-container>     	
    
       </div>
       
-	  <md-input-container flex>
+	  <md-input-container flex class="maxL">
         <label>E-mail</label>
         <input required type="email" name="userEmail" md-maxlength="50" ng-model="user.email" style="width: 250px; font-size: 14px;">
         <div ng-messages="formUser.userEmail.$error">
-          <div ng-message="required">Campo obrigatório.</div>
+          <div  ng-message="required">Campo obrigatório.</div>
           <div ng-message="md-maxLength">O tamanho máximo para o email é de 50 character</div>
         </div>
       </md-input-container>    
